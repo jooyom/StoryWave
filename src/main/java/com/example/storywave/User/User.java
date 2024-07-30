@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 import java.time.LocalDateTime;
 
 
@@ -14,7 +18,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@EnableJpaAuditing
 public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -43,11 +47,27 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ActiveStatus activeStatus = ActiveStatus.ACTIVE;
 
-    @Column(nullable = false)
+    @Column
+    @CreatedDate
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column
+    @LastModifiedDate
     private LocalDateTime updatedAt ;
+
+    @PrePersist
+    protected void createdAt() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
+
+    @PreUpdate
+    protected void updatedAt() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+
 }
 
 enum ActiveStatus{
@@ -57,5 +77,7 @@ enum ActiveStatus{
 enum Role {
     USER, ADMIN
 }
+
+
 
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 /*@RestController*/
 @Controller
-@RequestMapping("/api/userList")
+@RequestMapping("/userList")
 public class UserListController {
 
     private List<User> users = new ArrayList<>();

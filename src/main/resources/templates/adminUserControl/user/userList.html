@@ -299,13 +299,13 @@
                 <button id="search_btn"><img class="search_img" src="search.png" alt="검색 버튼"></button>
             </form>
             <div class="menu_cont2">
-                <a th:href="">공지사항</a>
-                <a th:href="">영화 <span>리뷰/서평</span></a>
-                <a th:href="">도서 <span>리뷰/서평</span></a>
+                <a >공지사항</a>
+                <a >영화 <span>리뷰/서평</span></a>
+                <a >도서 <span>리뷰/서평</span></a>
                 <div class="user_menu">
-                    <a th:href="">회원가입</a>
+                    <a >회원가입</a>
                     <span>|</span>
-                    <a th:href="">로그인</a>
+                    <a >로그인</a>
                 </div>
             </div>
         </nav>
@@ -333,9 +333,9 @@
             <td th:text="${user.username}" > </td>
             <td th:text="${user.nickname}" > </td>
             <td th:text="${user.email}" > </td>
-            <td th:text="${user.createAt}" > </td>
+            <td th:text="${user.createdAt}" > </td>
             <td th:text="${user.activeStatus}"> </td>
-            <td><button class="btn-open-modal" data-status="${post.userstatus}">회원 관리</button></td>
+            <td><button class="btn-open-modal">회원 관리</button></td>
 
         </tr>
         </tbody>
@@ -352,7 +352,7 @@
                 <div class="dropdown">
                     <button class="dropbtn" onclick="dropdown()">
                         <!--<span class="dropbtn_icon">more_horiz</span>-->
-                        <span class="dropbtn_click" th:text="${userStatus}"></span>
+                        <span class="dropbtn_click" th:text="${activeStatus}"></span>
                     </button>
                     <div class="dropdown-content">
                         <div class="userControl" onclick="showMenu(this.innerText)">회원</div>

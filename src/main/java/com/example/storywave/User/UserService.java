@@ -63,7 +63,6 @@ public class UserService {
     }
 
 
-    @LogExecutionTime
     public List<UserDTO> getAllUsers() {
         return users.stream()
                 .map(this::convertToUserDTO)
