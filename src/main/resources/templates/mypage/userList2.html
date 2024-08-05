@@ -375,7 +375,7 @@
     </div>
 
     <!-- modal 여기있다 -->
-    <div class="modal" id="userModal">
+    <div class="modal" id="userModal" onclick="openModal()">
         <div class='modal-content'>
             <span class="close">&times;</span>
             <div class="change-status">
@@ -420,7 +420,6 @@
                     document.getElementById('statusReason').value = data.reason;
                     document.getElementById('userId').value = data.userId;
 
-                    // 모달 열기
                     openModal();
                 })
         }
