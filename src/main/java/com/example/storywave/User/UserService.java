@@ -110,13 +110,15 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public void updateUserStatus(Long id, String activeStatus, String reason) {
-        User user = userRepository.findById(id).orElse(null);
+    public boolean updateUserStatus(Long userId, String status, String reason) {
+        User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            user.setActiveStatus(activeStatus);
+            user.setActiveStatus(status);
+            user.setBanReason(reason);
             userRepository.save(user);
+            return true;
         }
-
+        return false;
     }
 
     public User findById(Long id) {

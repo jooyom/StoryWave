@@ -23,6 +23,7 @@ public class UserListController {
     private List<User> users = new ArrayList<>();
 
 
+
     //유저 조회 페이지 - 마이페이지랑 연결
     /*@GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -38,6 +39,19 @@ public class UserListController {
         model.addAttribute("users", users);
         return "mypage/userList2";
     }
+
+    @GetMapping("/mypage/{userId}")
+    @ResponseBody
+    public User getUserInfo(@PathVariable Long userId) {
+        return userService.findById(userId);
+    }
+
+    /*@PostMapping("/mypage/reject")
+    @ResponseBody
+    public String updateUserStatus(@RequestBody UserStatusUpdateRequest request) {
+        boolean success = userService.updateUserStatus(request.getUserId(), request.getStatus(), request.getReason());
+        return success ? "Success" : "Failure";
+    }*/
 
 
    /* @PostMapping("/updateUserStatus")
