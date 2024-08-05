@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
-@RequestMapping("/StoryWave")
+@RequestMapping("/admin/mypage")
 public class UserListController {
 
     @Autowired
@@ -34,24 +36,59 @@ public class UserListController {
     public String getAllUsers(Model model) {
         List<UserDto> users = userService.getAllUsers();
         model.addAttribute("users", users);
-        return "mypage/userList";
+        return "mypage/userList2";
     }
 
 
-
-
-    //모달
-    /*@PutMapping
-    public ResponseEntity<UserDto> updateUserStatus(@PathVariable("id") Long id, @RequestBody UserDto updateuserDto){
-        UserDto updatedUserStatusDto = userService.updateUserStatus(id, updateuserDto);
-
-        return ResponseEntity.ok(updatedUserStatusDto);
+   /* @PostMapping("/updateUserStatus")
+    public ResponseEntity<String> updateUserStatus(
+            @RequestParam Long userId,
+            @RequestParam String status,
+            @RequestParam String reason) {
+        // Your logic to update user status
+        this.updateUserStatus()
+        return ResponseEntity.ok("Success");
     }*/
 
-    @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        UserDto createuserDto = userService.createUser(userDto);
-        return ResponseEntity.ok(createuserDto);
+    @PutMapping("/updateUserStatus/{id}")
+    public ResponseEntity<Map<String, String>> updateUserStatus(
+            @PathVariable("id") Long id,
+            @RequestBody User updateUserStatus) {
 
+        User user = users.stream()
+                .filter(m -> m.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("멤버를 찾지못하였습니다."));
+
+        user.setActiveStatus(updateUserStatus.getActiveStatus());
+
+        Map<String, String> response = new HashMap<>();
+        response.put("success", "true");
+
+        return ResponseEntity.ok(response);
     }
+
 }
+
+   /* @PutMapping
+    public ResponseEntity<UserDto> updateUserStatus(@PathVariable("id") Long id, @RequestBody ActiveStatus activeStatus){
+        UserDto updateUserStatus = userService.updateUserStatus(id, activeStatus);
+
+        return ResponseEntity.ok(updateUserStatus);
+    }*/
+
+
+
+/*@GetMapping("/admin/{userId}")
+public String adminChangeRole(@PathVariable Long userId,
+                              @RequestParam(required = false, defaultValue = "1") int page,
+                              @RequestParam(required = false, defaultValue = "") String keyword) throws UnsupportedEncodingException {
+    userService.changeRole(userId);
+    return "redirect:/users/admin?page=" + page + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+}*/
+
+
+
+
+
+

@@ -18,7 +18,8 @@ public class UserDto {
     private String nickname;
     private String email;
     private Role role;
-    private ActiveStatus activeStatus;
+    private String activeStatus;
+    private String banReason;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -40,6 +41,10 @@ public class UserDto {
         dto.setPassword(user.getPassword());
         dto.setNickname(user.getNickname());
         dto.setEmail(user.getEmail());
+        dto.setActiveStatus(user.getActiveStatus());
+        dto.setBanReason(user.getBanReason());
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
         return dto;
     }
 
@@ -50,8 +55,11 @@ public class UserDto {
         user.setPassword(this.password);
         user.setNickname(this.nickname);
         user.setEmail(this.email);
-        user.setId(this.id);
+        user.setCreatedAt(this.createdAt);
         user.setActiveStatus(this.activeStatus);
+        user.setBanReason(this.banReason);
+        user.setUpdatedAt(this.updatedAt);
+
         return user;
     }
 

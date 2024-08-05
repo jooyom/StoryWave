@@ -23,7 +23,7 @@ public class UserService {
 
     public UserDto createUser(UserDto userDto) {
         User user = convertToUserEntity(userDto);
-        //user.setId(nextUserPkId++);
+        user.setId(nextUserPkId++);
         user.setCreatedAt(LocalDateTime.now());
         users.add(user);
         return convertToUserDto(user);
@@ -67,11 +67,6 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException());
     }
 
-    public void deleteUser(Long id) {
-        User user = findUserById(id);
-        users.remove(user);
-        log.info("삭제 성공하였습니다.");
-    }
 
     private User findUserById(Long id) {
         return users.stream()
@@ -80,13 +75,13 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("id에 해당하는 글을 찾을 수 없습니다."));
     }
 
-    public UserDto updateUser(Long id, UserDto updateUserDto) {
+    /*public UserDto updateUser(Long id, UserDto updateUserDto) {
         User user = findUserById(id);
         user.setPassword(updateUserDto.getPassword());
         user.setNickname(updateUserDto.getNickname());
         user.setUpdatedAt(LocalDateTime.now());
         return convertToUserDto(user);
-    }
+    }*/
 
 
    /* public UserDto updateUserStatus(Long id, UserDto updateUserStatusDto) {
@@ -97,11 +92,11 @@ public class UserService {
 
     }*/
 
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public UserDto getUser(Long id) {
         User user = userRepository.findAll().get(users.size());
         return UserDto.fromEntity(user);
-    }
+    }*/
 
 
     @Transactional(readOnly = true)
@@ -109,6 +104,27 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(UserDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public void updateUserStatus(Long id, String activeStatus, String reason) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setActiveStatus(activeStatus);
+            userRepository.save(user);
+        }
+
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
     }
 
 

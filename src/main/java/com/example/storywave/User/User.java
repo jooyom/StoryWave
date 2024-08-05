@@ -44,8 +44,10 @@ public class User {
     private Role role = Role.USER;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ActiveStatus activeStatus = ActiveStatus.ACTIVE;
+    private String activeStatus;
+
+    @Column
+    private String banReason;
 
     @Column
     @CreatedDate
@@ -68,10 +70,10 @@ public class User {
 
 
 }
-
+/*
 enum ActiveStatus{
     ACTIVE, INACTIVE, SUSPENDED
-}
+}*/
 
 enum Role {
     USER, ADMIN
